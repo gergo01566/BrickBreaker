@@ -2,15 +2,20 @@ package game.menu;
 
 import game.GamePanel;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class Menu {
+public class Menu extends JPanel {
     public Rectangle playButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 150, 100 ,50 );
     public Rectangle scoresButton = new Rectangle(((GamePanel.WIDTH - 250)/2), 250, 250 ,50 );
     public Rectangle helpButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 350, 100 ,50 );
     public Rectangle exitButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 450, 100 ,50 );
 
-    public void Rajzol(Graphics g){
+    public void rajzol(Graphics g){
+
+        g.setColor(Color.black);
+        g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+
         Graphics2D gg = (Graphics2D) g;
         Font fnt = new Font("arial", Font.BOLD, 50);
         g.setFont(fnt);

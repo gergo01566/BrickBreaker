@@ -11,11 +11,15 @@ public class Map {
     private int brow = 0;
     private int bcol = 0;
 
+    public Map() throws IOException {
+        level = 1;
+        bricks = loadBricks(level);
+    }
+
     public Map(int level) throws IOException {
         this.level = level;
         bricks = loadBricks(level);
     }
-
 
     public Brick[][] getBricks() {
         return bricks;

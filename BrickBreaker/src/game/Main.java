@@ -1,5 +1,7 @@
 package game;
 
+import game.menu.Menu;
+
 import javax.swing.*;
 import java.io.IOException;
 

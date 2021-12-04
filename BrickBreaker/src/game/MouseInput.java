@@ -1,5 +1,6 @@
 package game;
 
+import game.menu.GameCourt;
 import game.menu.LeaderBoard;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class MouseInput implements MouseListener {
             //Ha a Start gombot választottuk
             if (my >= 150 && my <= 200) {
                 try {
-                    GamePanel p = new GamePanel();
+                    GamePanel.setGameCourt(new GameCourt());
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
