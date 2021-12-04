@@ -12,7 +12,7 @@ public class Map {
     private int bcol = 0;
 
     public Map() throws IOException {
-        level = 1;
+        level = 2;
         bricks = loadBricks(level);
     }
 

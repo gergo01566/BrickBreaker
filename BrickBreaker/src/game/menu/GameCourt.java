@@ -15,18 +15,15 @@ public class GameCourt extends JPanel{
     private boolean running = false;
     private InfoPanel infos;
 
+
     public GameCourt() throws IOException {
         labda = new Labda();
         paddle = new Paddle();
         map = new Map();
         infos = new InfoPanel();
-//        addKeyListener(this);
-//        this.addMouseListener(new MouseInput());
-//        this.setFocusable(true);
     }
 
     public void rajzol(Graphics g) {
-        System.out.print("mee");
         //Háttér
         g.setColor(Color.black);
         g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
@@ -67,7 +64,7 @@ public class GameCourt extends JPanel{
 
 
         if (gameOver) {
-            running = false;
+
             infos.drawGameOver(g);
             try {
                 endGame();
@@ -94,12 +91,10 @@ public class GameCourt extends JPanel{
         dialog.cancelButton.addActionListener(e -> {
             try {
                 endGame();
-                //resetGame();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
             dialog.dispose();
-
         });
 
         dialog.setVisible(true);
@@ -108,6 +103,7 @@ public class GameCourt extends JPanel{
     private void endGame() throws IOException {
         running = false;
         TextField t = new TextField();
+        GamePanel.setState(State.MENU);
     }
 
     private void nextLevel() throws IOException {
@@ -115,8 +111,6 @@ public class GameCourt extends JPanel{
         map = new Map(currentLevel + 1);
         labda = new Labda();
         paddle = new Paddle();
-//        labda.resetPosition();
-//        paddle.resetPosition();
     }
 
     public boolean checkWin() {
@@ -155,7 +149,7 @@ public class GameCourt extends JPanel{
                     }
 
                     //felulrol
-                    else if (labda.getPozY() + labda.getBallRect().height - 1 <= map.getBrickByParam(ii,jj).y) {
+                    else if (labda.getPozY() + labda.getBallRect().height - 2 <= map.getBrickByParam(ii,jj).y) {
                         if (labda.getDirY() > 0) labda.changeDirY();
                     }
 

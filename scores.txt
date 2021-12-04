@@ -27,3 +27,8 @@ eer,30
 kuecA,30
 asd,10
 asd,10
+hello,30
+heí,20
+ok,10
+d,0
+ok,0

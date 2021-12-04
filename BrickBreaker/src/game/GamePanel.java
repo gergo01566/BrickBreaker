@@ -17,9 +17,8 @@ import java.io.*;
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
     public static final int HEIGHT = 600;
     public static final int WIDTH = 714;
-    public static State state = State.MENU;
+    protected static State state = State.MENU;
     private final Menu menu;
-
 
 
     private static GameCourt gameCourt;
@@ -31,7 +30,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         timer = new Timer(keses, this);
         timer.start();
 
-        //gameCourt = new GameCourt();
         menu = new Menu();
 
         addKeyListener(this);
@@ -41,7 +39,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     }
 
     public void paint(Graphics g){
-        System.out.print("meghivtam1");
         if(state == State.MENU){
             menu.rajzol(g);
         } else if (state == State.GAME){
@@ -93,25 +90,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         }
 
     }
-
-
+    
     @Override
     public void keyReleased(KeyEvent e) {}
 
     @Override
     public void keyTyped(KeyEvent e) { }
 
-
-//    public void resetGame() throws IOException {
-//        labda = new Labda();
-//        paddle = new Paddle();
-//        InfoPanel.scores = 0;
-//        InfoPanel.lives = 0;
-//        level = 1;
-//        labda.resetPosition();
-//        paddle.resetPosition();
-//        bricks = loadBricks(2);
-//    }
 
     public static void setState(State state) {
         GamePanel.state = state;
