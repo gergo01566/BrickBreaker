@@ -26,7 +26,7 @@ public class InfoPanel {
     }
 
     public void setLives(int lives) {
-        this.lives = lives;
+        InfoPanel.lives = lives;
     }
 
     public void drawWin(Graphics g){

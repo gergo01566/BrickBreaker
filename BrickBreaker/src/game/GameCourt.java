@@ -1,10 +1,10 @@
-package game.menu;
+package game;
 
-import game.*;
-import game.TextField;
+import game.menu.ContinueDialog;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GameCourt extends JPanel{
@@ -17,6 +17,13 @@ public class GameCourt extends JPanel{
 
 
     public GameCourt() throws IOException {
+        labda = new Labda();
+        paddle = new Paddle();
+        map = new Map();
+        infos = new InfoPanel();
+    }
+
+    public GameCourt(int level) throws IOException {
         labda = new Labda();
         paddle = new Paddle();
         map = new Map();
@@ -195,4 +202,15 @@ public class GameCourt extends JPanel{
         return running;
     }
 
+    public Map getMap() {
+        return map;
+    }
+
+    public InfoPanel getInfos() {
+        return infos;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
 }

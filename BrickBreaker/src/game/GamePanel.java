@@ -1,7 +1,6 @@
 package game;
 
 
-import game.menu.GameCourt;
 import game.menu.Menu;
 
 import javax.swing.*;
@@ -22,7 +21,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
 
     private static GameCourt gameCourt;
-    private Timer timer;
+    private final Timer timer;
 
 
     public GamePanel() throws IOException {
@@ -90,13 +89,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         }
 
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {}
 
     @Override
     public void keyTyped(KeyEvent e) { }
-
 
     public static void setState(State state) {
         GamePanel.state = state;
@@ -104,10 +102,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     public static void setGameCourt(GameCourt gameCourt) {
         GamePanel.gameCourt = gameCourt;
-    }
-
-    public static GameCourt getGameCourt() {
-        return GamePanel.gameCourt;
     }
 
 }

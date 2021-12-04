@@ -34,5 +34,23 @@ public abstract class Brick implements Serializable {
 
     public abstract int getCode();
 
+    public void setCode(int code){
+        this.code = code;
+    }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getBrickHeight() {
+        return brickHeight;
+    }
+
+    public int getBrickWidth() {
+        return brickWidth;
+    }
 }

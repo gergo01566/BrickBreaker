@@ -1,8 +1,6 @@
 package game;
 
-import game.menu.GameCourt;
 import game.menu.LeaderBoard;
-import game.menu.Menu;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

@@ -50,4 +50,7 @@ public class LeaderBoard extends JFrame {
         }
     }
 
+    public LinkedList<PlayerScore> getTopScores() {
+        return topScores;
+    }
 }

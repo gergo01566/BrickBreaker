@@ -12,7 +12,7 @@ public class Map {
     private int bcol = 0;
 
     public Map() throws IOException {
-        level = 2;
+        level = 3;
         bricks = loadBricks(level);
     }
 
@@ -21,16 +21,8 @@ public class Map {
         bricks = loadBricks(level);
     }
 
-    public Brick[][] getBricks() {
-        return bricks;
-    }
-
     public Brick getBrickByParam(int col, int row) {
         return bricks[col][row];
-    }
-
-    public void setBricks(Brick[][] bricks) {
-        this.bricks = bricks;
     }
 
     public int getBrow() {
@@ -52,27 +44,27 @@ public class Map {
     public int getLevel() {return level;}
 
 
-//    public void mapGenerator(int col, int row) {
-//        bricks = new Brick[col][row];
-//        Random r = new Random();
-//        int code;
-//        int brickWidth = (GamePanel.WIDTH - 100) / col;
-//        int brickHeight = (GamePanel.HEIGHT / 2 - 50) / row;
-//
-//        for (int i = 0; i < col; i++) {
-//            for (int j = 0; j < row; j++) {
-//                code = r.nextInt(3);
-//                bricks[i][j] = makeBrick(i, j, code, brickWidth, brickHeight);
-//            }
-//        }
-//
-//        for (int j = 0; j < col; j++) {
-//            for (var i = 0; i < row; i++) {
-//                System.out.print(bricks[j][i].code + " ");
-//            }
-//            System.out.println();
-//        }
-//    }
+    public void mapGenerator(int col, int row) {
+        bricks = new Brick[col][row];
+        Random r = new Random();
+        int code;
+        int brickWidth = (GamePanel.WIDTH - 100) / col;
+        int brickHeight = (GamePanel.HEIGHT / 2 - 50) / row;
+
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < row; j++) {
+                code = r.nextInt(3);
+                bricks[i][j] = makeBrick(i, j, code, brickWidth, brickHeight);
+            }
+        }
+
+        for (int j = 0; j < col; j++) {
+            for (var i = 0; i < row; i++) {
+                System.out.print(bricks[j][i].code + " ");
+            }
+            System.out.println();
+        }
+    }
 
     public Brick[][] loadBricks(int level) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("level_" + level + ".txt"));
