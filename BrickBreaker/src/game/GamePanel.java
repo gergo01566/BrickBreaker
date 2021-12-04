@@ -24,28 +24,25 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     private Paddle paddle;
     private final InfoPanel infos;
     private final Menu menu;
-    private boolean gameOver = false;
-    private Brick[][] bricks;
-    private int level;
-
     private boolean running = false;
     private boolean palyatNyert = false;
+    private Map map;
+    private boolean gameOver = false;
 
     public GamePanel() throws IOException {
-        level = 2;
         infos = new InfoPanel();
         paddle = new Paddle();
         labda = new Labda();
 
         //MapGenerator(4, 6);
-        bricks = loadBricks(level);
+        map = new Map(1);
         menu = new Menu();
 
         addKeyListener(this);
         this.addMouseListener(new MouseInput());
         this.setFocusable(true);
 
-        int keses = 8;
+        int keses = 1;
         timer = new Timer(keses, this);
         timer.start();
     }
@@ -64,9 +61,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
             paddle.Draw(g);
 
             //Téglák kirajzolása
-            for (int i = 0; i < bricks.length; i++) {
-                for (int j = 0; j < bricks[0].length; j++) {
-                    bricks[i][j].Draw((Graphics2D) g);
+            for (int i = 0; i < map.getBrow(); i++) {
+                for (int j = 0; j < map.getBcol(); j++) {
+                    map.getBrickByParam(i,j).Draw((Graphics2D) g);
                 }
             }
 
@@ -74,13 +71,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
             labda.Draw(g);
 
 
-            if (running && checkWin() && level <= 4) {
+            if (running && checkWin() && map.getLevel() <= 4) {
                 handleWin();
                 running = false;
             }
 
 
-            if (level == 5 && checkWin()){
+            if (map.getLevel() == 5 && checkWin()){
                 infos.drawWin(g);
                 running = false;
                 try {
@@ -190,17 +187,19 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
     }
 
     private void nextLevel() throws IOException {
-        level += 1;
-        bricks = loadBricks(level);
-        labda.resetPosition();
-        paddle.resetPosition();
+        int currentLevel = map.getLevel();
+        map = new Map(currentLevel + 1);
+        labda = new Labda();
+        paddle = new Paddle();
+//        labda.resetPosition();
+//        paddle.resetPosition();
     }
 
     public boolean checkWin() {
         int remainingBricks = 0;
-        for (int i = 0; i < bricks.length; i++) {
-            for (int j = 0; j < bricks[0].length; j++) {
-                if (bricks[i][j].getCode() == 1) {
+        for (int i = 0; i < map.getBrow(); i++) {
+            for (int j = 0; j < map.getBcol(); j++) {
+                if (map.getBrickByParam(i,j).getCode() == 1) {
                     remainingBricks += 1;
                 }
             }
@@ -221,27 +220,27 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
         // labda + kockak
 
-        for (int ii = 0; ii < bricks.length; ii++) {
-            for (int jj = 0; jj < bricks[ii].length; jj++) {
+        for (int ii = 0; ii < map.getBrow(); ii++) {
+            for (int jj = 0; jj < map.getBcol(); jj++) {
 
-                if (bricks[ii][jj].intersect(labda)) {
+                if (map.getBrickByParam(ii,jj).intersect(labda)) {
 
                     //alulrol
-                    if (labda.getPozY() + 2 >= bricks[ii][jj].y + bricks[ii][jj].brickHeight) {
+                    if (labda.getPozY() + 2 >= map.getBrickByParam(ii,jj).y + map.getBrickByParam(ii,jj).brickHeight) {
                         if (labda.getDirY() < 0) labda.changeDirY();
                     }
 
                     //felulrol
-                    else if (labda.getPozY() + labda.getBallRect().height - 1 <= bricks[ii][jj].y) {
+                    else if (labda.getPozY() + labda.getBallRect().height - 1 <= map.getBrickByParam(ii,jj).y) {
                         if (labda.getDirY() > 0) labda.changeDirY();
                     }
 
                     //balrol
-                    else if (labda.getPozX() + labda.getSize() + 1 >= bricks[ii][jj].x) {
+                    else if (labda.getPozX() + labda.getSize() + 1 >= map.getBrickByParam(ii,jj).x) {
                         if (labda.getDirX() > 0) labda.changeDirX();
 
                             //jobbrol
-                        else if (labda.getDirX() - 1 <= bricks[ii][jj].x + bricks[ii][jj].brickWidth)
+                        else if (labda.getDirX() - 1 <= map.getBrickByParam(ii,jj).x + map.getBrickByParam(ii,jj).brickWidth)
                             if (labda.getDirX() < 0) labda.changeDirX();
 
                     }
@@ -263,110 +262,24 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         }
     }
 
-    /**
-     * Ez a függvény egy Bricket csinál a megadott paraméterekkel
-     *
-     * @param x      a Brick x koordinátája
-     * @param y      a Brick y koordinátája
-     * @param code   Brick beazonosítására használandó
-     * @param width  Brick szélessége
-     * @param height Brick magassága
-     * @return létrehoz egy brick-et és visszaadja azt
-     */
-    private Brick makeBrick(int x, int y, int code, int width, int height) {
-        return switch (code) {
-            case 2 -> new UnbreakableBrick(2, x * width + 50, y * height + 50, width, height, Color.GRAY);
-            case 1 -> new StandardBrick(1, x * width + 50, y * height + 50, width, height, Color.WHITE);
-            case 0 -> new EmptySpace(x * width + 50, y * height + 50, width, height, Color.BLACK);
-            default -> null;
-        };
-    }
 
-    public Brick[][] loadBricks(int level) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("level_" + level + ".txt"));
-        String line;
-        int brow, bcol;
-        line = reader.readLine();
-        String[] cols = line.split(",");
 
-        brow = Integer.parseInt(cols[0]);
-        bcol = Integer.parseInt(cols[1]);
 
-        int brickWidth = (GamePanel.WIDTH - 100) / brow;
-        int brickHeight = (GamePanel.HEIGHT / 2 - 50) / bcol;
 
-        Brick[][] b = new Brick[brow][bcol];
-        System.out.println(brow + " " + bcol);
-        int row = 0;
-        while ((line = reader.readLine()) != null) {
-            cols = line.split(",");
-            int col = 0;
-            for (String c : cols) {
-                System.out.print(Integer.parseInt(c) + " ");
-                b[row][col] = makeBrick(row, col, Integer.parseInt(c), brickWidth, brickHeight);
-                col++;
-            }
-            System.out.println();
-            row++;
-        }
-        reader.close();
-        return b;
-    }
+//    public void resetGame() throws IOException {
+//        labda = new Labda();
+//        paddle = new Paddle();
+//        InfoPanel.scores = 0;
+//        InfoPanel.lives = 0;
+//        level = 1;
+//        labda.resetPosition();
+//        paddle.resetPosition();
+//        bricks = loadBricks(2);
+//    }
 
-    public void resetGame() throws IOException {
-        labda = new Labda();
-        paddle = new Paddle();
-        InfoPanel.scores = 0;
-        InfoPanel.lives = 0;
-        level = 1;
-        labda.resetPosition();
-        paddle.resetPosition();
-        bricks = loadBricks(2);
-    }
 
-    public int getLevel() {return level;}
 
     public static void setState(State state) {
         GamePanel.state = state;
     }
-
-    public void saveBricks() throws IOException {
-        StringBuilder builder = new StringBuilder();
-        builder.append(bricks.length).append(",").append(bricks[0].length).append("\n");
-        for (int i = 0; i < bricks.length; i++) {
-            for (int j = 0; j < bricks[0].length; j++) {
-                builder.append(bricks[i][j]);
-                if (j < bricks[0].length - 1) {
-                    builder.append(",");
-                }
-            }
-            builder.append("\n");
-        }
-        BufferedWriter writer = new BufferedWriter(new FileWriter("level_2.txt"));
-        writer.write(builder.toString());
-        writer.close();
-    }
-
-    public void MapGenerator(int col, int row) {
-        bricks = new Brick[col][row];
-        Random r = new Random();
-        int code;
-        int brickWidth = (GamePanel.WIDTH - 100) / col;
-        int brickHeight = (GamePanel.HEIGHT / 2 - 50) / row;
-
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < row; j++) {
-                code = r.nextInt(3);
-                bricks[i][j] = makeBrick(i, j, code, brickWidth, brickHeight);
-            }
-        }
-
-        for (int j = 0; j < col; j++) {
-            for (var i = 0; i < row; i++) {
-                System.out.print(bricks[j][i].code + " ");
-            }
-            System.out.println();
-        }
-    }
-
 }
