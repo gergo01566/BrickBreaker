@@ -5,11 +5,14 @@ import game.GamePanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Letrehozza az egyes menu gombokat es megjeleniti azt
+ */
 public class Menu extends JPanel {
-    public Rectangle playButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 150, 100 ,50 );
-    public Rectangle scoresButton = new Rectangle(((GamePanel.WIDTH - 250)/2), 250, 250 ,50 );
-    public Rectangle helpButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 350, 100 ,50 );
-    public Rectangle exitButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 450, 100 ,50 );
+    public static Rectangle playButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 150, 100 ,50 );
+    public static Rectangle scoresButton = new Rectangle(((GamePanel.WIDTH - 250)/2), 250, 250 ,50 );
+    public static Rectangle helpButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 350, 100 ,50 );
+    public static Rectangle exitButton = new Rectangle(((GamePanel.WIDTH - 100)/2), 450, 100 ,50 );
 
     public void rajzol(Graphics g){
 
@@ -41,4 +44,5 @@ public class Menu extends JPanel {
         gg.draw(helpButton);
         gg.draw(exitButton);
     }
+
 }

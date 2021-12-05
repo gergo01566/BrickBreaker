@@ -2,6 +2,9 @@ package game;
 
 import java.awt.*;
 
+/**
+ * InfoPanel osztaly, ami tarolja es megjeleniti a jatekos eletet es pontszamat
+ */
 public class InfoPanel {
     protected static int scores;
     protected static int lives;

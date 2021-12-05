@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import static javax.swing.LayoutStyle.ComponentPlacement.UNRELATED;
 
+/**
+ * TextField osztalyban letrehoztam egy JPanelt, hogy a felhasznalo megtudja adni a nevat,
+ * majd ezt a scores.txt fajlba mentem.
+ */
 public class TextField extends JFrame implements ActionListener, Serializable {
     JButton button;
     JTextField textField;

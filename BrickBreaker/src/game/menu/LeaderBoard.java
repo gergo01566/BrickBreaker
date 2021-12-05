@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Letrehozza a dicsoseglista ablakot
+ */
 public class LeaderBoard extends JFrame {
     private final LinkedList<PlayerScore> topScores = new LinkedList<>();
 

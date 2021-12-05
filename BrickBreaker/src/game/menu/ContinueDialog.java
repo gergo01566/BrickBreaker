@@ -10,6 +10,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * ContinueDialog osztaly, amely megvalositja a JDialog-ot
+ * Ket gombbal rendelezik (Continue es Exit)
+ * Megkerdezi a felhasznalot, hogy tovabb szeretne-e lepni a kovetkezo palyara
+ */
 public class ContinueDialog extends JDialog {
     public JButton okButton = new JButton("Continue");
     public JButton cancelButton = new JButton("Exit");
@@ -26,12 +31,7 @@ public class ContinueDialog extends JDialog {
                     closeAction.confirmClosing();
                 }
             }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                }
-            });
-
+        });
 
         setTitle("Do you want to continue?");
         setLayout(new GridBagLayout());

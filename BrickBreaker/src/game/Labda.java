@@ -3,6 +3,10 @@ package game;
 
 import java.awt.*;
 
+/**
+ * Labda osztaly, aminek van merete, pozicioja, iranya es elore meghatarozott szine
+ * A labda visszapattan az utorol, a palya szeleirol es a teglakrol
+ */
 public class Labda {
     private int pozX;
     private int pozY;
@@ -18,6 +22,9 @@ public class Labda {
         dirY = 3;
     }
 
+    /**
+     * Labda poziciojat es iranyat visszaallitja a kezdopozicioba, ha a jatekos uj palyara lep
+     */
     public void resetPosition() {
         pozX = GamePanel.WIDTH / 2 - size / 2;
         pozY = GamePanel.HEIGHT -115;
@@ -25,6 +32,10 @@ public class Labda {
         dirY = 3;
     }
 
+    /**
+     * Ez a fuggveny a labdyt folyamatosan mozgatja es ellenorzi, hogy a labda utkozott-e
+     * a palya szelevel, ha igen, akkor az iranyat megvaltoztatja
+     */
     public void move(){
         pozX+=dirX;
         pozY+=dirY;
@@ -33,11 +44,19 @@ public class Labda {
         else if(pozX > GamePanel.WIDTH - size) dirX = -dirX;
     }
 
+    /**
+     * @param b adott Brick-kel valo utkozest vizsgalja
+     * @return hamis vagy igaz ertekkel ter vissza
+     */
     public boolean intersects(Brick b){
-        return (this.pozX + 15 >= b.x && this.pozY + 15 >= b.y
-                && b.x + b.brickWidth >= this.pozX && b.y + b.brickHeight >= this.pozY);
+        return (this.pozX + this.size >= b.getX() && this.pozY + this.size >= b.getY()
+                && b.getX() + b.getBrickWidth() >= this.pozX && b.getY() + b.getBrickHeight() >= this.pozY);
     }
 
+    /**
+     * @param p A labda utovel vala utkozeset vizsgalja
+     * @return
+     */
     public boolean intersects(Paddle p) {
         return this.getBallRect().intersects(p.getPaddleRect());
     }
@@ -68,9 +87,15 @@ public class Labda {
         return dirY;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public Rectangle getBallRect() {
         return new Rectangle(pozX, pozY, size, size);
     }
+
+    //Setterek
 
     public void setPozX(int pozX) {
         this.pozX = pozX;
@@ -80,12 +105,6 @@ public class Labda {
         this.pozY = pozY;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    //Setterek
-
     public void setDirX(int dirX) {
         this.dirX = dirX;
     }
@@ -94,8 +113,10 @@ public class Labda {
         this.dirY = dirY;
     }
 
-    //Kirajzol
 
+    /**
+     * Kirajzolja a labdát
+     */
     public void Draw(Graphics g){
         g.setColor(color);
         g.fillOval(pozX, pozY, size, size);

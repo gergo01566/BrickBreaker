@@ -2,6 +2,10 @@ package game;
 
 import java.awt.*;
 
+/**
+ * StandardBrick osztaly reprezentalja a torheto teglakat, ez az osztaly megvalositja a Brick absztrakt osztalyt es annak
+ * metodusait
+ */
 public class StandardBrick extends Brick{
 
     private boolean broken = false;

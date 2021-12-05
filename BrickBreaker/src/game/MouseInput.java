@@ -1,6 +1,7 @@
 package game;
 
 import game.menu.LeaderBoard;
+import game.menu.Menu;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,9 @@ import java.awt.event.MouseListener;
 import java.io.IOException;
 
 
+/**
+ * Lekeri a pozciot, ahova kattintott a felhasznalo a menuben
+ */
 public class MouseInput implements MouseListener {
 
     @Override
@@ -20,8 +24,8 @@ public class MouseInput implements MouseListener {
 
         if(GamePanel.state == State.MENU){
             //Ha a Score Board opciót választottuk
-            if(mx >= (GamePanel.WIDTH - 250)/2 && mx <= ((GamePanel.WIDTH - 250)/2 +250)){
-                if (my >= 250 && my <= 300) {
+            if(mx >= Menu.scoresButton.getX() && mx <= Menu.scoresButton.getX() + Menu.scoresButton.getWidth()){
+                if (my >= Menu.scoresButton.getY() && my <= Menu.scoresButton.getY()+Menu.scoresButton.getHeight()) {
                     try {
                         LeaderBoard l = new LeaderBoard();
                     } catch (IOException ex) {
@@ -30,10 +34,10 @@ public class MouseInput implements MouseListener {
                 }
             }
 
-            if (mx >= ((GamePanel.WIDTH - 100) / 2) && mx <= ((GamePanel.WIDTH - 100) / 2) + 100) {
+            if (mx >= Menu.playButton.getX() && mx <= Menu.playButton.getX() + Menu.playButton.getWidth()) {
 
                 //Ha a Start gombot választottuk
-                if (my >= 150 && my <= 200) {
+                if (my >= Menu.playButton.getY() && my <= Menu.playButton.getY()+Menu.playButton.getHeight()) {
                     try {
                         GamePanel.setGameCourt(new GameCourt());
                     } catch (IOException ex) {
@@ -43,12 +47,12 @@ public class MouseInput implements MouseListener {
                 }
 
                 //Ha az Exit gombot választottuk
-                if (my >= 450 && my <= 500) {
+                if (my >= Menu.exitButton.getY() && my <= Menu.exitButton.getY()+Menu.exitButton.getHeight()) {
                     System.exit(1);
                 }
 
                 //Help gombot választottuk
-                if (my >= 350 && my <= 400) {
+                if (my >= Menu.helpButton.getY() && my <= Menu.helpButton.getY()+Menu.helpButton.getHeight()) {
                     String message =
                             """
                                     Use the keyboard arrow keys to move your paddle and hit the ball.
@@ -64,7 +68,6 @@ public class MouseInput implements MouseListener {
             }
         }
     }
-
 
     @Override
     public void mouseReleased(MouseEvent e) {}

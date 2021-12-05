@@ -2,6 +2,9 @@ package game;
 
 import java.awt.*;
 
+/**
+ * Uto osztaly, aminek van egy x pozicioja, szelessege es magassaga, valamint egy elore meghatarozott y pozicioja
+ */
 public class Paddle {
     private int pozX;
     private final int width;
@@ -33,6 +36,8 @@ public class Paddle {
         pozX -= 20;
     }
 
+    //Getterek
+
     public int getPozX() {
         return pozX;
     }
@@ -45,8 +50,11 @@ public class Paddle {
         return new Rectangle(pozX, pozY, width, height);
     }
 
+    //Setter
+
     public void setPozX(int pozX) {
         this.pozX = pozX;
     }
+
 }
 

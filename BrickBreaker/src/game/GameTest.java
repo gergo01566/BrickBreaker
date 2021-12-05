@@ -37,32 +37,35 @@ public class GameTest {
 
     @Test
     public void testStandardBrickCollision() throws IOException {
-        GameCourt gameCourt = new GameCourt();
-        assertEquals(1, gameCourt.getMap().getBrickByParam(2,4).getCode());
+        GameCourt gameCourt = new GameCourt(2);
+        assertEquals(1, gameCourt.getMap().getBrickByParam(2,5).getCode());
         gameCourt.getLabda().setPozY(gameCourt.getMap().getBrickByParam(2,4).getY());
         gameCourt.getLabda().setPozX(gameCourt.getMap().getBrickByParam(2,4).getX()-gameCourt.getLabda().getSize());
         gameCourt.getMap().getBrickByParam(2,4).intersect(gameCourt.getLabda());
+
+        gameCourt.getLabda().move();
         gameCourt.checkCollision();
         assertEquals(0,gameCourt.getMap().getBrickByParam(2,4).getCode());
     }
 
     @Test
     public void testChangeBallDirX() throws IOException {
-        GameCourt gameCourt = new GameCourt();
+        GameCourt gameCourt = new GameCourt(2);
         assertEquals(1,gameCourt.getLabda().getDirX());
-        gameCourt.getLabda().setPozY(gameCourt.getMap().getBrickByParam(2,4).getY());
-        gameCourt.getLabda().setPozX(gameCourt.getMap().getBrickByParam(2,4).getX()-gameCourt.getLabda().getSize());
+        gameCourt.getLabda().setPozY(gameCourt.getMap().getBrickByParam(2,5).getY());
+        gameCourt.getLabda().setPozX(gameCourt.getMap().getBrickByParam(2,5).getX()-gameCourt.getLabda().getSize()/2);
         gameCourt.getMap().getBrickByParam(2,4).intersect(gameCourt.getLabda());
         gameCourt.checkCollision();
+        gameCourt.getLabda().move();
         assertEquals(-1,gameCourt.getLabda().getDirX());
     }
 
     @Test
     public void testChangeBallDirY() throws IOException {
-        GameCourt gameCourt = new GameCourt();
+        GameCourt gameCourt = new GameCourt(2);
         assertEquals(3,gameCourt.getLabda().getDirY());
-        gameCourt.getLabda().setPozY(gameCourt.getMap().getBrickByParam(2,4).getY() - gameCourt.getLabda().getSize());
-        gameCourt.getLabda().setPozX(gameCourt.getMap().getBrickByParam(2,4).getX());
+        gameCourt.getLabda().setPozY(gameCourt.getMap().getBrickByParam(2,5).getY() - gameCourt.getLabda().getSize());
+        gameCourt.getLabda().setPozX(gameCourt.getMap().getBrickByParam(2,5).getX());
         gameCourt.getMap().getBrickByParam(2,4).intersect(gameCourt.getLabda());
         gameCourt.checkCollision();
         assertEquals(-3,gameCourt.getLabda().getDirY());

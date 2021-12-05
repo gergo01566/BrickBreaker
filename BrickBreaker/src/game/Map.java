@@ -4,6 +4,10 @@ import java.awt.*;
 import java.io.*;
 import java.util.Random;
 
+/**
+ * Map osztaly, amely betolti az egyes palyakat
+ * Tarolja a Brick-eket tartalamzo 2 dimenzios tombot
+ */
 public class Map {
 
     private Brick[][] bricks;
@@ -12,7 +16,7 @@ public class Map {
     private int bcol = 0;
 
     public Map() throws IOException {
-        level = 3;
+        level = 1;
         bricks = loadBricks(level);
     }
 
@@ -21,29 +25,9 @@ public class Map {
         bricks = loadBricks(level);
     }
 
-    public Brick getBrickByParam(int col, int row) {
-        return bricks[col][row];
-    }
-
-    public int getBrow() {
-        return brow;
-    }
-
-    public void setBrow(int brow) {
-        this.brow = brow;
-    }
-
-    public int getBcol() {
-        return bcol;
-    }
-
-    public void setBcol(int bcol) {
-        this.bcol = bcol;
-    }
-
-    public int getLevel() {return level;}
-
-
+    /**
+     * Ez a fuggveny veletlenszeruen letrehoz egy Brick-eket tarolo tombot
+     */
     public void mapGenerator(int col, int row) {
         bricks = new Brick[col][row];
         Random r = new Random();
@@ -66,6 +50,12 @@ public class Map {
         }
     }
 
+    /**
+     * Az atadott parameter fuggvenyeben beolvassa az adott fajlbol a tomb elemeit es letrehoz egy Brickeket tartalmazo
+     * tomboz a Brick kodok alapjan
+     * @param level melyik palyat kell betoltenie
+     * @return visszaadja a txt-bol beolvasott Brickeket tartalmazo tombot
+     */
     public Brick[][] loadBricks(int level) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("level_" + level + ".txt"));
         String line;
@@ -95,14 +85,14 @@ public class Map {
     }
 
     /**
-     * Ez a függvény egy Bricket csinál a megadott paraméterekkel
+     * Ez a fuggveny egy Bricket csinal a kapott kod alapjan
      *
-     * @param x      a Brick x koordinátája
-     * @param y      a Brick y koordinátája
-     * @param code   Brick beazonosítására használandó
-     * @param width  Brick szélessége
-     * @param height Brick magassága
-     * @return létrehoz egy brick-et és visszaadja azt
+     * @param x      a Brick x koordinataja
+     * @param y      a Brick y koordinataja
+     * @param code   Brick beazonositasara hasznalando
+     * @param width  Brick szelessege
+     * @param height Brick magassaga
+     * @return letrehoz egy brick-et és visszaadja azt
      */
     private Brick makeBrick(int x, int y, int code, int width, int height) {
         return switch (code) {
@@ -112,7 +102,6 @@ public class Map {
             default -> null;
         };
     }
-
 
     public void saveBricks() throws IOException {
         StringBuilder builder = new StringBuilder();
@@ -131,5 +120,28 @@ public class Map {
         writer.close();
     }
 
+    //Getterek
+
+    public Brick getBrickByParam(int col, int row) {
+        return bricks[col][row];
+    }
+
+    public int getBrow() {
+        return brow;
+    }
+
+    public void setBrow(int brow) {
+        this.brow = brow;
+    }
+
+    public int getBcol() {
+        return bcol;
+    }
+
+    public void setBcol(int bcol) {
+        this.bcol = bcol;
+    }
+
+    public int getLevel() {return level;}
 
 }

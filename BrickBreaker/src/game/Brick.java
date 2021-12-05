@@ -4,11 +4,14 @@ import java.awt.*;
 import java.io.Serializable;
 
 
+/**
+ * Ez egy absztrakt osztaly, amit az egyes Brick tipusok valositanak meg
+ */
 public abstract class Brick implements Serializable {
-    public int brickHeight, brickWidth;
+    private int brickHeight, brickWidth;
 
     protected Color color;
-    public int x, y;
+    private int x, y;
 
     protected int code;
 
@@ -20,12 +23,16 @@ public abstract class Brick implements Serializable {
         this.color = color;
     }
 
+    /**
+     * Absztrakt fuggveny, amelyet az egyes Brick tipusok kulonbozo modon valositanak meg, annak fuggvenyeben,
+     * hogy a labda milyen tipusu teglaval utkozott
+     * @param l labda amely egy adott teglaval utkozik
+     */
     public abstract boolean intersect(Labda l);
 
     public void Draw(Graphics2D g){
         g.setColor(color);
         g.fillRect(x, y, brickWidth, brickHeight);
-
 
         g.setStroke(new BasicStroke(3));
         g.setColor(Color.black);

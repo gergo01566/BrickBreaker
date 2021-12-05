@@ -12,13 +12,15 @@ import java.awt.event.KeyListener;
 import java.io.*;
 
 
-
+/**
+ * GamePanel osztaly amely kezeli az egyes gomblenyomasokat, tarolja es kezeli a jatek allapotat
+ * (menuben vagyunk-e vagy a jatekban). Kirajzolja a menut es a jatekot a jatek allapotanak fuggvenyeben
+ */
 public class GamePanel extends JPanel implements KeyListener, ActionListener {
     public static final int HEIGHT = 600;
     public static final int WIDTH = 714;
     protected static State state = State.MENU;
     private final Menu menu;
-
 
     private static GameCourt gameCourt;
     private final Timer timer;
@@ -46,6 +48,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
         repaint();
     }
 
+    /**
+     * Az egyes gomblenyomasokat kezeli
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -77,7 +82,6 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if(state == State.GAME){
             timer.start();
 
